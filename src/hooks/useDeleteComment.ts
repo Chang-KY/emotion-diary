@@ -5,7 +5,7 @@ export const useDeleteComment = (diaryId: string) => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (commentId: number) => {
+    mutationFn: async (commentId: number | string) => {
       const {error} = await supabase
         .from('emotion_comment')
         .delete()

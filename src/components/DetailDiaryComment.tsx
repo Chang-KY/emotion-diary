@@ -13,13 +13,14 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
   const {data: comments, isLoading: commentsLoading, error: commentsError} = useComments(id);
   const myProfile = useMyProfile();
   const deleteComment = useDeleteComment(id!);
-  const [activeCommentId, setActiveCommentId] = useState<number | null>(null);
+  const [activeCommentId, setActiveCommentId] = useState<number | null | string>(null);
 
-  const handleDelete = (commentId: number) => {
+  const handleDelete = (commentId: number | string) => {
     if (confirm('정말 삭제하시겠습니까?')) {
       deleteComment.mutate(commentId);
     }
   };
+  console.log(comments);
 
   if (commentsError) return <div className="p-4 text-red-500">에러: {commentsError.message}</div>;
   return (
@@ -29,15 +30,15 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
         <p className="text-sm text-gray-400">댓글이 없습니다.</p>
       ) : (
         comments?.map((comment) => {
-          const isMyComment = comment.commenter_id?.id === myProfile?.id;
+          const isMyComment = comment.commenter_id[0]?.id === myProfile?.id;
 
           return (
             <div key={comment.id} className="border-b relative border-gray-200 dark:border-gray-700 pb-4">
               <div className="flex items-start gap-3">
-                <Avatar src={comment.commenter_id?.profile_image} alt="user"/>
+                <Avatar src={comment.commenter_id[0]?.profile_image} alt="user"/>
                 <div>
                   <div className="text-sm font-semibold text-gray-800 dark:text-white flex items-center">
-                    {comment.commenter_id?.nickname}
+                    {comment.commenter_id[0]?.nickname}
                     {isMyComment &&
                       <span className="text-xs text-blue-500 ml-1">
                               (나)

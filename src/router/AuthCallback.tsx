@@ -12,7 +12,7 @@ const AuthCallback = () => {
   useEffect(() => {
     const checkSession = async () => {
       let retryCount = 0;
-      let session = null;
+      let session: null | any = null;
 
       // 5초간 최대 3번까지 세션 시도
       while (!session && retryCount < 3) {
