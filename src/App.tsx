@@ -11,12 +11,13 @@ import usePageTitle from "@/hooks/usePageTitle.ts";
 function App() {
   const theme = useThemeDetector();
   const location = useLocation();
-  usePageTitle();
   const hideHeaderRoutes = [/^\/diary\/[^/]+$/]; // 예: /diary/1, /diary/abc123
-
   const shouldHideHeader = hideHeaderRoutes.some((regex) =>
     regex.test(location.pathname)
   );
+
+  usePageTitle();
+
   return (
     <div className="dark:bg-black bg-white
      text-black dark:text-white w-full h-full min-h-full">
