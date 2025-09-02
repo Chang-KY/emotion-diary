@@ -8,9 +8,10 @@ import Loading from "@/components/loading/Loading.tsx";
 const Start = () => {
   const {mutate, isPending} = useLogin();
   const {data: user, isLoading} = useAuthUser();
+  console.log(user);
 
   if (isLoading) return <Loading/>;
-  if (user) return <Navigate to="/home" replace/>;
+  if (user) return <Navigate to="/my-list"/>;
 
   return (
     <PageWrapper>

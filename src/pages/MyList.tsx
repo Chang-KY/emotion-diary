@@ -71,7 +71,7 @@ const MyList = ({userId, isOther}: { userId?: string, isOther?: boolean }) => {
         </div>
       )}
       {items.length > 0 && !userId && (
-        <div className='py-1 text-center w-full'>
+        <div className='py-1 text-center w-full block lg:hidden'>
           내 감정일기 리스트
         </div>
       )}

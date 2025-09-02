@@ -93,21 +93,23 @@ const Calendar = () => {
         </div>
       </header>
 
-      <div className="shadow-sm ring-1 ring-black/5 lg:flex lg:flex-auto lg:flex-col">
+      <div className="shadow-sm lg:flex lg:flex-auto lg:flex-col">
         <DayOfWeek/>
 
-        <div className="flex bg-gray-200 text-xs/6 text-gray-700 lg:flex-auto">
+        <div className="flex text-xs/6 text-gray-800 lg:flex-auto">
           <div className="hidden w-full lg:grid lg:grid-cols-7 lg:grid-rows-6 lg:gap-px">
             {days.map((day) => (
               <div
                 key={day.date}
                 data-is-today={day.isToday ? '' : undefined}
                 data-is-current-month={day.isCurrentMonth ? '' : undefined}
-                className="relative bg-gray-50 px-3 py-2 text-gray-500 data-is-current-month:bg-white"
+                className="relative bg-black px-3 py-2 flex flex-col items-center data-is-current-month:bg-black data-is-current-month:text-white"
               >
                 <time
                   dateTime={day.date}
-                  className="in-data-is-today:flex in-data-is-today:size-6 in-data-is-today:items-center in-data-is-today:justify-center in-data-is-today:rounded-full in-data-is-today:bg-indigo-600 in-data-is-today:font-semibold in-data-is-today:text-white"
+                  className="in-data-is-today:flex in-data-is-today:size-6 in-data-is-today:items-center
+                   in-data-is-today:justify-center in-data-is-today:rounded-full in-data-is-today:bg-indigo-600
+                   in-data-is-today:font-semibold in-data-is-today:text-white"
                 >
                   {day.date
                     ? day.date.split('-').pop()?.replace(/^0/, '')
@@ -118,14 +120,15 @@ const Calendar = () => {
                     {day.events.slice(0, 2).map((event) => (
                       <li key={event.dailyId}>
                         <div className="group flex">
-                          <p className="flex-auto truncate font-medium text-gray-900 group-hover:text-indigo-600">
+                          <p
+                            className="flex items-center text-blue-700 dark:text-blue-500 truncate font-medium text-white group-hover:text-indigo-600">
                             {event.emotionType}
                           </p>
                           <time
                             dateTime={event.date.toString()}
-                            className="ml-3 hidden flex-none text-gray-500 group-hover:text-indigo-600 xl:block"
+                            className="ml-1.5 hidden flex-none group-hover:text-indigo-600 xl:block"
                           >
-                            {event.date.toString()}
+                            {emotionEmojiMap[event.emotionType]}
                           </time>
                         </div>
                       </li>

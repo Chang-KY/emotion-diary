@@ -3,6 +3,7 @@ import Button from '@/components/Button';
 import {useSearchUser} from "@/hooks/useSearchUser.ts";
 import Avatar from "@/components/Avatar.tsx";
 import {useNavigate} from "react-router-dom";
+import {useMyProfile} from "@/hooks/useMyProfile.ts";
 
 type User = {
   id: string;
@@ -54,13 +55,19 @@ export default SearchUser;
 
 const UserCard = ({user}: { user: User }) => {
   const navigate = useNavigate();
+  const myProfile = useMyProfile();
+
   return (
-    <button className="p-4 border rounded-md w-full max-w-7xl shadow-sm dark:border-gray-700"
+    <button className="p-4 border rounded-md w-full max-w-7xl
+    shadow-sm dark:border-gray-700 cursor-pointer"
             onClick={() => navigate(`/user-page/${user.id}`)}>
       <div className="flex items-center gap-4">
         <Avatar src={user.profile_image} className="w-12 h-12 rounded-full" alt="profile"/>
         <div className="flex flex-col items-start">
-          <span className="font-semibold text-gray-900 dark:text-white">{user.nickname}</span>
+          <span className="font-semibold text-gray-900 dark:text-white">
+            {user.nickname}
+            {myProfile?.id === user.id && <span className='text-blue-500 ml-1.5'>(나)</span>}
+          </span>
           <span className="text-sm text-gray-500 dark:text-gray-400">
             {user.introduction || '소개글이 없습니다'}
           </span>

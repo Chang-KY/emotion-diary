@@ -9,7 +9,9 @@ const WriteButton = () => {
   return (
     <div className=''>
       <button
-        className="fixed bottom-12 right-4 z-50 size-7 rounded-full p-2 bg-black dark:bg-white text-white dark:text-black shadow-lg hover:scale-105 transition-transform"
+        className="fixed bottom-12 lg:right-10 right-5 z-50 size-7 rounded-full p-2
+         bg-black dark:bg-white
+         text-white dark:text-black shadow-lg hover:scale-105 transition-transform"
         aria-label="기록하기"
         onClick={() => setOpen(true)}
       >

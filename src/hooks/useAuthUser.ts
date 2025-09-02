@@ -18,5 +18,6 @@ export const useAuthUser = () => {
     staleTime: 5 * 60 * 10000,
     refetchOnWindowFocus: false,
     retry: 2,
+    refetchOnMount: 'always',
   });
 };

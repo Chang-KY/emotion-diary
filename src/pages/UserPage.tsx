@@ -15,16 +15,16 @@ import {useFollowerList, useFollowingList, useIsFollowing, useToggleFollow} from
 
 const UserPage = () => {
   const {id} = useParams();
-  const {data: user, isLoading, error} = useUserProfile(id!);
-  const myProfile = useMyProfile();
-  const isMyPage = myProfile?.id === user?.id;
   const [activeTab, setActiveTab] = useState<'info' | 'diary'>('info');
-  const [isOpen, setIsOpen] = useState(false);
   const [isOpenFollower, setIsOpenFollower] = useState<'follower' | 'following' | ''>('');
+  const [isOpen, setIsOpen] = useState(false);
+  const myProfile = useMyProfile();
   const {data: isFollowing} = useIsFollowing(myProfile?.id, id);
-  const toggleFollow = useToggleFollow(myProfile?.id, id);
+  const {data: user, isLoading, error} = useUserProfile(id!);
   const {data: following = []} = useFollowingList(id);
   const {data: followers = []} = useFollowerList(id);
+  const isMyPage = myProfile?.id === user?.id;
+  const toggleFollow = useToggleFollow(myProfile?.id, id);
 
   if (isLoading) return <Loading title="유저 정보를 불러오는 중..."/>;
   if (error) return <div className="text-red-500">유저 정보를 가져오지 못했습니다.</div>;
@@ -104,7 +104,7 @@ const UserPage = () => {
       </div>
 
       {activeTab === 'info' && <UserPageInfo user={user}/>}
-      {activeTab === 'diary' && <MyList userId={id!} isOther={true}/>}
+      {activeTab === 'diary' && <MyList userId={id!} isOther={!isMyPage}/>}
 
       {/* 팔로워 페이지 */}
       <Modal isOpen={isOpenFollower === 'follower' || isOpenFollower === 'following'}

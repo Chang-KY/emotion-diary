@@ -30,15 +30,15 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
         <p className="text-sm text-gray-400">댓글이 없습니다.</p>
       ) : (
         comments?.map((comment) => {
-          const isMyComment = comment.commenter_id[0]?.id === myProfile?.id;
+          const isMyComment = comment.commenter_id?.id === myProfile?.id;
 
           return (
             <div key={comment.id} className="border-b relative border-gray-200 dark:border-gray-700 pb-4">
               <div className="flex items-start gap-3">
-                <Avatar src={comment.commenter_id[0]?.profile_image} alt="user"/>
+                <Avatar src={comment.commenter_id?.profile_image} alt="user"/>
                 <div>
                   <div className="text-sm font-semibold text-gray-800 dark:text-white flex items-center">
-                    {comment.commenter_id[0]?.nickname}
+                    {comment.commenter_id?.nickname}
                     {isMyComment &&
                       <span className="text-xs text-blue-500 ml-1">
                               (나)
@@ -52,43 +52,44 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
                   </div>
                 </div>
               </div>
-              <div className='absolute -top-1.5 right-0'>
-                <ul>
-                  <li>
-                    <PopoverMenu
-                      popoverPanelLocation="left"
-                      title={
-                        <div className="rounded-full flex items-center justify-center">
-                          <FaEllipsis className="text-xl text-gray-600 dark:text-gray-300"/>
-                        </div>
-                      }
-                    >
-                      {({close}) => (
-                        <div className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
-                          <button
-                            className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-                            onClick={() => {
-                              setActiveCommentId(comment.id);
-                              close(); // 팝오버 닫기
-                            }}
-                          >
-                            수정
-                          </button>
-                          <button
-                            className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
-                            onClick={() => {
-                              handleDelete(comment.id);
-                              close(); // ✅ 팝오버 닫기
-                            }}
-                          >
-                            삭제
-                          </button>
-                        </div>
-                      )}
-                    </PopoverMenu>
-                  </li>
-                </ul>
-              </div>
+              {isMyComment &&
+                <div className='absolute -top-1.5 right-0'>
+                  <ul>
+                    <li>
+                      <PopoverMenu
+                        popoverPanelLocation="left"
+                        title={
+                          <div className="rounded-full flex items-center justify-center">
+                            <FaEllipsis className="text-xl text-gray-600 dark:text-gray-300"/>
+                          </div>
+                        }
+                      >
+                        {({close}) => (
+                          <div className="flex flex-col divide-y divide-gray-200 dark:divide-gray-700">
+                            <button
+                              className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                              onClick={() => {
+                                setActiveCommentId(comment.id);
+                                close(); // 팝오버 닫기
+                              }}
+                            >
+                              수정
+                            </button>
+                            <button
+                              className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
+                              onClick={() => {
+                                handleDelete(comment.id);
+                                close(); // ✅ 팝오버 닫기
+                              }}
+                            >
+                              삭제
+                            </button>
+                          </div>
+                        )}
+                      </PopoverMenu>
+                    </li>
+                  </ul>
+                </div>}
               <Modal
                 isOpen={activeCommentId === comment.id}
                 onClose={() => setActiveCommentId(null)}

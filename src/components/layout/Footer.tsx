@@ -10,8 +10,8 @@ const Footer = () => {
     <footer
       className={clsx(
         `fixed bottom-0 dark:bg-black bg-white left-0 right-0 z-50
-        transition-transform duration-300
-        max-w-5xl m-auto h-9 max-h-9 min-h-9`,
+        transition-transform duration-300 w-full 
+        lg:max-w-5xl m-auto h-9 max-h-9 min-h-9`,
         scrollDir === 'down' ? 'translate-y-full' : 'translate-y-0'
       )}
     >
@@ -23,8 +23,8 @@ const Footer = () => {
                 to={path}
                 className={({isActive}) =>
                   clsx(
-                    'flex flex-col items-center gap-1',
-                    isActive ? 'text-black dark:text-white' : 'text-gray-500 dark:text-gray-400'
+                    'flex flex-col items-center gap-1 w-full h-full',
+                    isActive ? 'text-indigo-600 dark:text-indigo-400' : 'text-gray-500 dark:text-gray-400'
                   )
                 }
               >
