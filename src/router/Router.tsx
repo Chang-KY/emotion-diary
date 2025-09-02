@@ -13,52 +13,47 @@ import SearchUser from "@/pages/SearchUser.tsx";
 
 const routes: RouteObject[] = [
   {
-    path: 'emotion-diary',
+    path: '',
+    element: <ProtectedRouter><App/></ProtectedRouter>,
+    errorElement: <NotAuthError/>, // 인증 없이 들어가도록 할 시 에러 발생
     children: [
       {
-        path: '',
-        element: <ProtectedRouter><App/></ProtectedRouter>,
-        errorElement: <NotAuthError/>, // 인증 없이 들어가도록 할 시 에러 발생
-        children: [
-          {
-            index: true,
-            element: <Navigate to="my-list" replace/>,
-          },
-          ...appTabs.map(tab => ({
-            path: tab.path,
-            element: tab.element,
-          })),
-          {
-            path: "diary/:id",
-            element: <DetailDiary/>
-          },
-          {
-            path: "user-page/:id",
-            element: <UserPage/>
-          },
-          {
-            path: "search-user",
-            element: <SearchUser/>,
-          }
-        ],
+        index: true,
+        element: <Navigate to="my-list" replace/>,
+      },
+      ...appTabs.map(tab => ({
+        path: tab.path,
+        element: tab.element,
+      })),
+      {
+        path: "diary/:id",
+        element: <DetailDiary/>
       },
       {
-        path: 'error',
-        element: <Error/>,
+        path: "user-page/:id",
+        element: <UserPage/>
       },
       {
-        path: 'start',
-        element: <Start/>
-      },
-      {
-        path: 'auth/callback',
-        element: <AuthCallback/>
-      },
-      {
-        path: '*',
-        element: <NotFound/>,
-      },
-    ]
+        path: "search-user",
+        element: <SearchUser/>,
+      }
+    ],
+  },
+  {
+    path: 'error',
+    element: <Error/>,
+  },
+  {
+    path: 'start',
+    element: <Start/>
+  },
+  {
+    path: 'auth/callback',
+    element: <AuthCallback/>
+  },
+  {
+    path: '*',
+    element: <NotFound/>,
   },
 ];
 
