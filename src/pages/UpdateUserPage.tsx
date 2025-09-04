@@ -43,7 +43,7 @@ const UpdateUserPage = ({onClose, myUserId}: { onClose: () => void, myUserId?: s
 
   if (isLoading) return <Loading title="프로필 불러오는 중..."/>;
   return (
-    <div className="max-w-3xl mx-auto px-4 py-3 h-full overflow-y-auto">
+    <div className="mx-auto px-4 h-[calc(100%-1.5rem)] overflow-y-auto">
       <h2 className="text-2xl font-bold mb-6 text-gray-900 dark:text-white">프로필 수정</h2>
 
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-3 text-sm">

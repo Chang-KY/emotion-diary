@@ -15,6 +15,9 @@ import {fullScreenLoadingAtom} from "@/store/fullScreenLoadingAtom.ts";
 import {useTodayDiary} from "@/hooks/useTodayDiary.ts";
 import {uploadImageToDiary} from "@/utils/uploadImageToDiary.ts";
 import {supabase} from "@/lib/supabase.ts";
+import useResponsive from "@/hooks/useResponsive.ts";
+import {CiImageOn} from "react-icons/ci";
+import clsx from "clsx";
 
 const Write = ({setOpen, date}: { setOpen: () => void, date?: Date }) => {
   const userProfile = useMyProfile();
@@ -32,6 +35,7 @@ const Write = ({setOpen, date}: { setOpen: () => void, date?: Date }) => {
       date: date ? date : new Date(),
     },
   });
+  const {isMd} = useResponsive();
   const [removeImage, setRemoveImage] = useState(false);
   const selectedDate = watch('date');
   const {data: todayDiary, isLoading} = useTodayDiary(selectedDate || new Date());
@@ -179,8 +183,19 @@ const Write = ({setOpen, date}: { setOpen: () => void, date?: Date }) => {
           />
         </div>
       </div>
+
+
+      <Textarea
+        name="content"
+        rows={7}
+        placeholder="내용을 입력하세요"
+        register={register('content', {required: '내용은 필수입니다'})}
+        errors={errors}
+      />
+
       {selectedImage && (
-        <div className="my-2 flex flex-col items-center justify-center">
+        <div
+          className={clsx(isMd ? `absolute right-0 bottom-0 flex items-center justify-center` : `my-2 flex flex-col items-center justify-center`)}>
           <img
             src={URL.createObjectURL(selectedImage)}
             alt="선택된 이미지"
@@ -192,13 +207,6 @@ const Write = ({setOpen, date}: { setOpen: () => void, date?: Date }) => {
         </div>
       )}
 
-      <Textarea
-        name="content"
-        rows={7}
-        placeholder="내용을 입력하세요"
-        register={register('content', {required: '내용은 필수입니다'})}
-        errors={errors}
-      />
       {todayDiary?.image_url && !removeImage && !selectedImage && (
         <div className="my-2 flex flex-col items-center justify-center">
           <img src={todayDiary.image_url} alt="기존 이미지" className="max-w-full max-h-60 rounded"/>
@@ -212,12 +220,33 @@ const Write = ({setOpen, date}: { setOpen: () => void, date?: Date }) => {
         </div>
       )}
 
-      <BottomKeyboardBar
-        onImageChange={(file: File) => {
-          setSelectedImage(file);
-          setRemoveImage(true);
-        }}
-      />
+      {isMd &&
+        <div className='absolute bottom-0 w-full inset-x-0 py-0.5 px-1 border-t border-gray-200 dark:border-gray-800'>
+          <input
+            type="file"
+            id="upload"
+            hidden
+            accept="image/*"
+            onChange={(e) => {
+              const file = e.target.files?.[0];
+              if (file) {
+                setSelectedImage(file);
+                setRemoveImage(true);
+              }
+            }}
+          />
+          <label htmlFor="upload" className="text-black dark:text-white cursor-pointer">
+            <CiImageOn className='text-5xl'/>
+          </label>
+        </div>}
+
+      {!isMd &&
+        <BottomKeyboardBar
+          onImageChange={(file: File) => {
+            setSelectedImage(file);
+            setRemoveImage(true);
+          }}
+        />}
 
     </form>
   );

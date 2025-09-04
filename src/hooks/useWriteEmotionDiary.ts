@@ -50,7 +50,6 @@ export const useWriteEmotionDiary = (
       }
 
       if (mode === 'update') {
-        console.log(input);
         const {data, error} = await supabase
           .from('emotion_diary')
           .update({
@@ -76,10 +75,7 @@ export const useWriteEmotionDiary = (
       if (mode === 'insert') {
         const date = new Date(variables.date);
         const year = date.getFullYear();
-        console.log(userId);
-        console.log(year);
         const month = date.getMonth();
-        console.log(month + 1);
         queryClient.invalidateQueries({
           queryKey: ['monthEmotions', userId, Number(year), Number(month)],
         }).then();
@@ -87,7 +83,6 @@ export const useWriteEmotionDiary = (
 
       // update일 때만 병합 (insert는 새로 생성이므로 불필요)
       if (mode === 'update' && variables.id) {
-        console.log(variables.id);
         setMergedQueryData(queryClient, ['emotion_diary_detail', Number(variables.id)], {
           content: variables.content,
           emotion_type: variables.emotionType,
@@ -99,7 +94,6 @@ export const useWriteEmotionDiary = (
       options?.onSuccess?.();
     },
     onError: (error: unknown) => {
-      console.log(error);
       if (options?.onError) {
         if (error instanceof CustomError) {
           options.onError(error.message);

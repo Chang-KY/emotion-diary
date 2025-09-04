@@ -99,7 +99,7 @@ export const fetchDiaryPage = async (
   // 5. 통합 반환
   return diaries.map((diary) => ({
     ...diary,
-    user: profileMap[diary.user_id],
+    user_id: profileMap[diary.user_id],
     likeCount: likeMap[diary.id] ?? 0,
     commentCount: commentMap[diary.id] ?? 0
   }));

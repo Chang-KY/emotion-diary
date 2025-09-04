@@ -2,6 +2,7 @@ import React, {type ReactNode, useEffect, useRef, useState} from 'react';
 import {createPortal} from 'react-dom';
 import clsx from 'clsx';
 import {IoMdClose} from 'react-icons/io';
+import useResponsive from "@/hooks/useResponsive.ts";
 
 interface ModalProps {
   isOpen: boolean;
@@ -16,8 +17,8 @@ const Modal = ({isOpen, onClose, children, className, variant = 'fullscreen'}: M
   const [isMounted, setIsMounted] = useState(false);
   const startYRef = useRef<number | null>(null);
   const [dragOffset, setDragOffset] = useState(0);
+  const {isMd} = useResponsive();
 
-  // ✅ Touch 이벤트 핸들러 (React 타입 사용)
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     startYRef.current = e.touches[0].clientY;
   };
@@ -39,7 +40,6 @@ const Modal = ({isOpen, onClose, children, className, variant = 'fullscreen'}: M
     startYRef.current = null;
   };
 
-  // ✅ 모달 열기/닫기 처리
   useEffect(() => {
     let timer: NodeJS.Timeout;
 
@@ -58,7 +58,6 @@ const Modal = ({isOpen, onClose, children, className, variant = 'fullscreen'}: M
     return () => clearTimeout(timer);
   }, [isOpen]);
 
-  // ✅ ESC 키 닫기
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') onClose();
@@ -79,7 +78,6 @@ const Modal = ({isOpen, onClose, children, className, variant = 'fullscreen'}: M
         'fixed inset-0 z-50 flex justify-center items-end transition-transform duration-300',
         isMounted ? 'translate-y-0' : 'translate-y-full',
       )}
-      // ✅ 드래그 중일 때만 transform 덮어쓰기
       style={variant === 'bottom-sheet' && dragOffset
         ? {transform: `translateY(${Math.min(dragOffset, 300)}px)`}
         : undefined
@@ -91,8 +89,8 @@ const Modal = ({isOpen, onClose, children, className, variant = 'fullscreen'}: M
         className={clsx(
           'bg-white dark:bg-black text-black dark:text-white shadow-lg px-2 py-2 transition-all duration-300 relative',
           variant === 'fullscreen'
-            ? 'w-full h-full md:rounded-lg'
-            : 'w-full max-h-[70vh] rounded-t-2xl touch-pan-y border-t-2 border-gray-100 dark:border-gray-900',
+            ? isMd ? `w-2/3 h-4/5 border border-gray-200 dark:border-gray-700 rounded-md m-auto` : `w-full h-full md:rounded-lg`
+            : `w-full max-h-[70vh] rounded-t-2xl touch-pan-y border-t-2 border-gray-100 dark:border-gray-900`,
           className
         )}
         onClick={(e) => e.stopPropagation()}

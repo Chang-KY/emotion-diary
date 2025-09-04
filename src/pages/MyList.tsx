@@ -87,6 +87,7 @@ const MyList = ({userId, isOther}: { userId?: string, isOther?: boolean }) => {
           >
             {items.map((virtualRow) => {
               const diary = flatData[virtualRow.index];
+              console.log(diary);
 
               return (
                 <div

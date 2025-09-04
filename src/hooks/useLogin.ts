@@ -11,7 +11,6 @@ export const useLogin = () => {
           redirectTo: `${import.meta.env.VITE_FRONTEND_URL}/auth/callback`, // 로그인 후 돌아올 페이지
         }
       });
-
       if (error) {
         const providerNameMap: Record<'kakao' | 'google', string> = {
           google: '구글',

@@ -1,4 +1,7 @@
-import {FaGlobe, FaLock, FaUsers, FaUserCircle} from 'react-icons/fa';
+import {
+  FaGlobe, FaLock, FaUsers,
+  // FaUserCircle
+} from 'react-icons/fa';
 
 export const ShareScopes = [
   {
@@ -19,12 +22,12 @@ export const ShareScopes = [
     icon: <FaLock/>,
     description: '본인 외에는 볼 수 없어요',
   },
-  {
-    value: 'selected',
-    label: '선택 공개',
-    icon: <FaUserCircle/>,
-    description: '특정 사용자에게만 공개됩니다',
-  },
+  // {
+  //   value: 'selected',
+  //   label: '선택 공개',
+  //   icon: <FaUserCircle/>,
+  //   description: '특정 사용자에게만 공개됩니다',
+  // },
 ] as const;
 
 export type ShareScopeType = typeof ShareScopes[number]['value'];

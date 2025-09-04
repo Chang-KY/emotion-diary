@@ -20,11 +20,10 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
       deleteComment.mutate(commentId);
     }
   };
-  console.log(comments);
 
   if (commentsError) return <div className="p-4 text-red-500">에러: {commentsError.message}</div>;
   return (
-    <div className="mt-6 space-y-5">
+    <div className="mt-6 space-y-5 relative">
       {commentsLoading && <Loading title='댓글을 가져오는 중...'/>}
       {!commentsLoading && comments?.length === 0 ? (
         <p className="text-sm text-gray-400">댓글이 없습니다.</p>
@@ -70,7 +69,7 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
                               className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                               onClick={() => {
                                 setActiveCommentId(comment.id);
-                                close(); // 팝오버 닫기
+                                close();
                               }}
                             >
                               수정
@@ -79,7 +78,7 @@ const DetailDiaryComment = ({id}: { id?: string }) => {
                               className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800"
                               onClick={() => {
                                 handleDelete(comment.id);
-                                close(); // ✅ 팝오버 닫기
+                                close();
                               }}
                             >
                               삭제

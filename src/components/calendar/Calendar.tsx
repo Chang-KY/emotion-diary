@@ -211,7 +211,6 @@ const Calendar = () => {
           selectedDateDiaries.map((diary) => {
             const emotion = emotionEmojiMap[diary.emotionType];
             const emojiLabel = emotionEmojiLabelMap[diary.emotionType];
-            console.log(diary);
             return (
               <button
                 key={diary.dailyId}

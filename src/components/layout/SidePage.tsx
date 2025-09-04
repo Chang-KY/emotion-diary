@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import {CiLogout, CiSearch, CiUser} from 'react-icons/ci'
 import {NavLink} from 'react-router-dom';
@@ -10,11 +10,13 @@ import {useMyProfile} from '@/hooks/useMyProfile'
 import {supabase} from '@/lib/supabase'
 import {appTabs} from "@/constants/appTabs.tsx";
 import {queryClient} from "@/lib/queryClient.ts";
+import AlertModal from "@/components/AlertModal.tsx";
+import Button from "@/components/Button.tsx";
 
 const TopButtons: React.FC = () => {
   const navigate = useNavigate()
   const myProfile = useMyProfile()
-
+  const [isOpen, setIsOpen] = useState(false);
   const menuButtons = [
     {
       label: '프로필',
@@ -29,12 +31,7 @@ const TopButtons: React.FC = () => {
     {
       label: '로그아웃',
       icon: <CiLogout className="text-lg"/>,
-      onClick: async () => {
-        await supabase.auth.signOut();
-        queryClient.setQueryData(['authUser'], null); // 즉시 UI에 반영
-        queryClient.invalidateQueries({queryKey: ['authUser']}).then();
-        navigate('/start', {replace: true});
-      },
+      onClick: () => setIsOpen(true),
     },
   ]
 
@@ -52,6 +49,25 @@ const TopButtons: React.FC = () => {
           <span>{btn.label}</span>
         </button>
       ))}
+
+      <AlertModal isOpen={isOpen} onClose={() => setIsOpen(false)}>
+        <p className=''>정말로 로그아웃을 하시겠습니까?</p>
+        <div className='w-full flex items-center gap-4 justify-end mt-3'>
+          <Button variant='outlined' size='md' intent='warning' className='' onClick={() => setIsOpen(false)}>
+            취소
+          </Button>
+
+          <Button variant='contained' size='md' intent='primary' className=''
+                  onClick={async () => {
+                    await supabase.auth.signOut();
+                    queryClient.setQueryData(['authUser'], null); // 즉시 UI에 반영
+                    queryClient.invalidateQueries({queryKey: ['authUser']}).then();
+                    navigate('/start', {replace: true});
+                  }}>
+            로그아웃
+          </Button>
+        </div>
+      </AlertModal>
     </div>
   )
 }
