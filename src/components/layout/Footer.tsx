@@ -17,7 +17,7 @@ const Footer = () => {
     >
       <nav className='h-full w-full flex justify-around'>
         <ul className="flex items-center h-full w-full">
-          {appTabs.map(({path, icon}) => (
+          {appTabs.map(({path, icon, label}) => (
             <li key={path} className="flex-1 flex flex-col items-center justify-center text-sm">
               <NavLink
                 to={path}
@@ -29,6 +29,7 @@ const Footer = () => {
                 }
               >
                 <div className="text-xl">{icon}</div>
+                <span className='text-xs'>{label}</span>
               </NavLink>
             </li>
           ))}

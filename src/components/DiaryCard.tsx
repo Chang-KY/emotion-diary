@@ -17,9 +17,10 @@ const DiaryCard = (props: {
     user_id: { id: string, nickname: string, profile_image: string },
     commentCount: number,
     created_at: Date,
-  }
+  },
+  myList?: boolean
 }) => {
-  const {diary} = props;
+  const {diary, myList} = props;
   const navigate = useNavigate();
   const emotion = getEmotionInfo(diary.emotion_type);
 
@@ -59,7 +60,7 @@ const DiaryCard = (props: {
       <div className="flex items-center justify-between w-full text-xs mt-2">
         <div className="text-gray-400 dark:text-gray-500 flex items-center gap-1">
           {getShareScopeIcon(diary.share_scope)}
-          {!diary.user_id.nickname && !diary.user_id.id && <div className='text-blue-400 ml-3'>
+          {myList && <div className='text-blue-400 ml-3'>
             작성된 날짜: {formatToKoreanDate(diary.created_at)}
           </div>}
         </div>

@@ -98,7 +98,7 @@ const Feed = () => {
                   className="absolute inset-x-0 top-0 px-3"
                   style={{transform: `translateY(${virtualRow.start}px)`}}
                 >
-                  <DiaryCard diary={diary} key={diary.id}/>
+                  <DiaryCard diary={diary}/>
                 </div>
               );
             })}

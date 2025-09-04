@@ -87,7 +87,6 @@ const MyList = ({userId, isOther}: { userId?: string, isOther?: boolean }) => {
           >
             {items.map((virtualRow) => {
               const diary = flatData[virtualRow.index];
-              console.log(diary);
 
               return (
                 <div
@@ -97,7 +96,7 @@ const MyList = ({userId, isOther}: { userId?: string, isOther?: boolean }) => {
                   className="absolute inset-x-0 top-0 px-3"
                   style={{transform: `translateY(${virtualRow.start}px)`}}
                 >
-                  <DiaryCard diary={diary}/>
+                  <DiaryCard diary={diary} myList={true}/>
                 </div>
               );
             })}
