@@ -138,10 +138,10 @@ const Write = ({setOpen, date}: { setOpen: () => void, date?: Date }) => {
     <form onSubmit={handleSubmit(onSubmit)} className='size-full mt-5'>
       <div className='absolute top-2 right-2 flex gap-3'>
 
-        {!todayDiary &&
-          <Button variant='text' size='sm' intent='primary'>
-            임시 보관함
-          </Button>}
+        {/*{!todayDiary &&*/}
+        {/*  <Button variant='text' size='sm' intent='primary'>*/}
+        {/*    임시 보관함*/}
+        {/*  </Button>}*/}
 
         <Button
           disabled={!isValid}
